@@ -1,8 +1,6 @@
 # Local development: Postgres only (app via `npm run dev`)
 #   docker compose up -d
-#
-# Production on VPS (app + db):
-#   docker compose --profile prod up -d --build
+#   # or: docker-compose up -d
 
 services:
   db:
@@ -20,40 +18,8 @@ services:
       interval: 5s
       timeout: 5s
       retries: 10
-    # Host port only for local `npm run dev` — not published in prod profile usage tip:
-    # keep for local; on VPS you can still leave it or remove the ports block.
     ports:
       - "${POSTGRES_HOST_PORT:-5433}:5432"
-
-  web:
-    profiles: ["prod"]
-    build:
-      context: .
-      dockerfile: Dockerfile
-      args:
-        NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: ${NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY}
-        NEXT_PUBLIC_CLERK_SIGN_IN_URL: ${NEXT_PUBLIC_CLERK_SIGN_IN_URL:-/sign-in}
-        NEXT_PUBLIC_CLERK_SIGN_UP_URL: ${NEXT_PUBLIC_CLERK_SIGN_UP_URL:-/sign-up}
-        NEXT_PUBLIC_VAPID_PUBLIC_KEY: ${NEXT_PUBLIC_VAPID_PUBLIC_KEY}
-        NEXT_PUBLIC_APP_URL: ${NEXT_PUBLIC_APP_URL:-https://draw.kodbox.mx}
-    container_name: slow-draw-web
-    restart: unless-stopped
-    depends_on:
-      db:
-        condition: service_healthy
-    environment:
-      DATABASE_URL: postgresql://${POSTGRES_USER:-draw}:${POSTGRES_PASSWORD:-draw}@db:5432/${POSTGRES_DB:-draw_game}
-      CLERK_SECRET_KEY: ${CLERK_SECRET_KEY}
-      NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: ${NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY}
-      NEXT_PUBLIC_CLERK_SIGN_IN_URL: ${NEXT_PUBLIC_CLERK_SIGN_IN_URL:-/sign-in}
-      NEXT_PUBLIC_CLERK_SIGN_UP_URL: ${NEXT_PUBLIC_CLERK_SIGN_UP_URL:-/sign-up}
-      NEXT_PUBLIC_VAPID_PUBLIC_KEY: ${NEXT_PUBLIC_VAPID_PUBLIC_KEY}
-      VAPID_PRIVATE_KEY: ${VAPID_PRIVATE_KEY}
-      VAPID_SUBJECT: ${VAPID_SUBJECT:-mailto:admin@kodbox.mx}
-      CRON_SECRET: ${CRON_SECRET}
-      NEXT_PUBLIC_APP_URL: ${NEXT_PUBLIC_APP_URL:-https://draw.kodbox.mx}
-    ports:
-      - "${WEB_HOST_PORT:-3000}:3000"
 
 volumes:
   draw_pg:

@@ -70,7 +70,11 @@ cp deploy/.env.production.example .env
 ### 4. Build & run app + db
 
 ```bash
-docker compose --profile prod up -d --build
+docker compose -f docker-compose.prod.yml up -d --build
+# If that fails (old Docker), try:
+#   docker-compose -f docker-compose.prod.yml up -d --build
+# Or install the plugin:
+#   sudo apt update && sudo apt install docker-compose-plugin
 ```
 
 This starts Postgres and the Next.js app on host port **3000**.
