@@ -1,0 +1,44 @@
+{
+  "name": "draw-game",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint",
+    "db:generate": "drizzle-kit generate",
+    "db:push": "drizzle-kit push",
+    "db:seed": "tsx --env-file=.env.local src/db/seed.ts",
+    "vapid": "web-push generate-vapid-keys",
+    "test:scoring": "tsx scripts/test-scoring.ts"
+  },
+  "dependencies": {
+    "@clerk/nextjs": "^7.5.22",
+    "@neondatabase/serverless": "^1.1.0",
+    "date-fns": "^4.4.0",
+    "drizzle-orm": "^0.45.2",
+    "framer-motion": "^12.42.2",
+    "nanoid": "^6.0.0",
+    "next": "16.2.11",
+    "postgres": "^3.4.9",
+    "react": "19.2.4",
+    "react-dom": "19.2.4",
+    "web-push": "^3.6.7",
+    "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "@types/web-push": "^3.6.4",
+    "dotenv": "^17.4.2",
+    "drizzle-kit": "^0.31.10",
+    "eslint": "^9",
+    "eslint-config-next": "16.2.11",
+    "tailwindcss": "^4",
+    "tsx": "^4.23.1",
+    "typescript": "^5"
+  }
+}

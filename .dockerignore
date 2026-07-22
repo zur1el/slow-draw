@@ -1,0 +1,15 @@
+.dockerignore
+.git
+.gitignore
+.next
+node_modules
+README.md
+docker-compose*.yml
+deploy
+*.md
+.env*
+!/.env.example
+AGENTS.md
+CLAUDE.md
+drizzle
+scripts

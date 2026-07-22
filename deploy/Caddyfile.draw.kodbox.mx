@@ -1,0 +1,10 @@
+# Caddy reverse proxy for draw.kodbox.mx
+# Place on the VPS (or include in your existing Caddyfile) and reload Caddy.
+#
+# Assumes Slow Draw web container publishes port 3000 on the host
+# (or change the reverse_proxy target to the Docker network).
+
+draw.kodbox.mx {
+	encode gzip
+	reverse_proxy 127.0.0.1:3000
+}
